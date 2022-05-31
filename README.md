@@ -35,27 +35,25 @@ $ npm install
 ## Running the app
 
 ```bash
-# development
+# local development
+$ docker-compose -f docker-compose-local.yaml stop
+$ docker-compose -f docker-compose-local.yaml rm
+$ docker-compose -f docker-compose-local.yaml up -d
+$ npm i
 $ npm run start
 
-# watch mode
-$ npm run start:dev
-
 # production mode
-$ npm run start:prod
+$ docker-compose stop
+$ docker-compose rm
+$ docker-compose build
+$ docker-compose up -d
 ```
 
 ## Test
 
 ```bash
-# unit tests
+# contract tests
 $ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
 ## Support
