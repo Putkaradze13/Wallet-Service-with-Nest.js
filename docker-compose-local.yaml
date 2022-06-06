@@ -10,3 +10,9 @@ services:
       POSTGRES_PASSWORD: grow420024
     ports:
       - '5432:5432'
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "15672:15672"
+      - "5672:5672"
