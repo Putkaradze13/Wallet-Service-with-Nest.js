@@ -14,12 +14,10 @@ services:
     environment:
       POSTGRES_PASSWORD: test1234321
   rabbit:
-    hostname: rabbit
-    image: rabbitmq:3-management-alpine
+    image: rabbitmq:management
     environment:
       RABBITMQ_DEFAULT_USER: "root"
       RABBITMQ_DEFAULT_PASS: "12345678"
-
     ports:
       - "15672:15672"
       - "5672:5672"
