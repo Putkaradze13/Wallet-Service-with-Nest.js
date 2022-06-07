@@ -21,6 +21,9 @@ export class RabbitService implements OnModuleInit {
       password: this.configService.get('RABBITMQ_PASS')
     });
     this.queueChannel = await this.queueConnection.createChannel();
+    this.queueChannel.assertQueue(this.configService.get('RABBITMQ_QUEUE'), {
+      durable: true
+    });
     this.queueChannel.consume(this.configService.get('RABBITMQ_QUEUE'), (msg) => {
       const { message, payload } = JSON.parse(msg.content.toString());
       this[this.reflector.get(message, RabbitService)](payload);
