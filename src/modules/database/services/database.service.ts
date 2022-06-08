@@ -1,6 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Sequelize } from 'sequelize-typescript';
-import * as Umzug from 'umzug';
+import { Umzug, SequelizeStorage } from 'umzug';
 
 @Injectable()
 export default class DatabaseService implements OnModuleInit {
@@ -12,9 +12,10 @@ export default class DatabaseService implements OnModuleInit {
 
   private async applyMigrations(): Promise<void> {
     const umzug = new Umzug({
-      storage: 'sequelize',
-      storageOptions: { sequelize: this.sequelize },
-      migrations: {}
+      migrations: { glob: 'migrations/*.js' },
+      context: this.sequelize.getQueryInterface(),
+      storage: new SequelizeStorage({ sequelize: this.sequelize }),
+      logger: console
     });
     await umzug.up();
   }
