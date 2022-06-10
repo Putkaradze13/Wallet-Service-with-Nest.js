@@ -1,6 +1,8 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { Sequelize } from 'sequelize-typescript';
-import { Umzug, SequelizeStorage } from 'umzug';
+import * as Umzug from 'umzug';
+
+import { getAbsolutePath } from '../../../utils/path';
 
 @Injectable()
 export default class DatabaseService implements OnModuleInit {
@@ -12,11 +14,20 @@ export default class DatabaseService implements OnModuleInit {
 
   private async applyMigrations(): Promise<void> {
     const umzug = new Umzug({
-      migrations: { glob: 'migrations/*.js' },
-      context: this.sequelize.getQueryInterface(),
-      storage: new SequelizeStorage({ sequelize: this.sequelize }),
-      logger: console
+      storage: 'sequelize',
+      storageOptions: { sequelize: this.sequelize },
+      migrations: {
+        path: `${getAbsolutePath()}/migrations`,
+        pattern: /^\d+[-\w]+.js$/,
+        params: [this.sequelize.getQueryInterface(), Sequelize]
+      }
     });
-    await umzug.up();
+    (async () => {
+      try {
+        await umzug.up();
+      } catch (e) {
+        console.log('Umzug Error', e);
+      }
+    })();
   }
 }
