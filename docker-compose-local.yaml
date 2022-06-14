@@ -7,7 +7,7 @@ services:
   db:
     image: postgres
     environment:
-      POSTGRES_PASSWORD: grow420024
+      POSTGRES_PASSWORD: 1234
     ports:
       - '5432:5432'
   rabbit:
