@@ -6,11 +6,12 @@ import { DatabaseModule } from '../database/database.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Wallet } from '../database/model/Wallet';
 import { WalletModule } from '../wallet/wallet.module';
+import { getAbsolutePath } from 'src/utils/path';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: `.env.${process.env.NODE_ENV}`
+      envFilePath: `${getAbsolutePath()}/.env.${process.env.NODE_ENV}`
     }),
     DatabaseModule,
     SequelizeModule.forFeature([Wallet]),
