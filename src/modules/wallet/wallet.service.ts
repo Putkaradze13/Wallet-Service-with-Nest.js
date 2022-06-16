@@ -1,13 +1,10 @@
-import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Sequelize } from 'sequelize-typescript';
 import { Transaction } from 'sequelize';
 import { Wallet } from '../database/model/Wallet';
 import { CreateWalletDto } from './dto/create-wallet-dto';
 import { WalletDetailsDto } from './dto/wallet-details-dto';
-import { ConfigService } from '@nestjs/config';
 
-@Injectable()
 export class WalletService {
   constructor(
     @InjectModel(Wallet)
